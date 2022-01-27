@@ -13,8 +13,6 @@ const App = () => {
         <h1><Link to={'/player/list'} >Manage Player</Link> | <Link to={'/status/game/1'} > Manage Player Status</Link></h1>
       </div>
         <Switch>
-         
-          
           <Main>
             <Route exact path="/addplayer">
               <AddPlayer />
@@ -23,6 +21,8 @@ const App = () => {
               <PlayerList />
             </Route>
           </Main>
+        </Switch>
+        <Switch>
           <PlayerStatus>
             <Route exact path="/status/game/:id">
               <PlayerStatusTable/>

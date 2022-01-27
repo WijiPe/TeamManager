@@ -14,6 +14,10 @@ const PlayerStatusTable = () => {
         .catch(err=>console.log(err.response))
     },[refresh])
 
+    const reload = () =>{
+        setRefresh(!refresh)
+    }
+
     return (
         <div>
             <table class="table" >
@@ -30,8 +34,7 @@ const PlayerStatusTable = () => {
                         <tr key={i} className="table-success">
                             <td>{player.player_name}</td>
                             <td>
-                                <PreferredPositionButton id={player._id} />
-                                {player.status}
+                                <PreferredPositionButton id={player._id} reload={reload}/>
                             </td>
                         </tr>
                     </tbody>

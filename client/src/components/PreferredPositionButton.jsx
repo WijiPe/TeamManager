@@ -1,29 +1,27 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { useHistory } from 'react-router-dom'
 
 const PreferredPositionButton = (props) => {
 
     const [status, setStatus] = useState("");
-    const history = useHistory()
-    const {id} = props
+    const {id, reload} = props
     const [errArr, setErrorArr] = useState([]);
 
     useEffect(()=>{
-        axios.get(`http://localhost:8000/showOneAuthor/${id}`)
+        axios.get(`http://localhost:8000/showOnePlayer/${id}`)
         .then(res=>setStatus(res.data.status))
         .catch(err=>console.log(err.response))
     },[id])
 
-    const onSubmitHandler = e => {
-        e.preventDefault();
+
+    const onClickHandler = (statusText) =>{
+        setStatus(statusText)
         axios.put(`http://localhost:8000/update/${id}`, {
-            status
+            status: statusText
         })
             .then(res=>{
-                console.log(status)
-                // setStatus("")
-                history.push("/status/game/1");
+                setStatus(statusText)
+                reload()
             })
             .catch(err=>{
                 const errResponse = err.response.data.errors
@@ -37,11 +35,18 @@ const PreferredPositionButton = (props) => {
 
     return (
         <div>
-            <form onClick={onSubmitHandler}>
-                <input type="submit" value="playing" name="status" onClick={(e)=>setStatus(e.target.value)} />
-                <input type="submit" value="not playing" name="status" onClick={(e)=>setStatus(e.target.value)}/>
-                <input type="submit" value="undecided" name="status" onClick={(e)=>setStatus(e.target.value)}/>
-            </form>
+            {status==="playing"?
+                <button onClick={(e)=>onClickHandler("playing")} className="btn btn-warning">playing</button>:
+                <button onClick={(e)=>onClickHandler("playing")} className="btn btn-secondary">playing</button>
+            }
+            {status==="not playing"?
+                <button onClick={(e)=>onClickHandler("not playing")} className="btn btn-danger">not playing</button>:
+                <button onClick={(e)=>onClickHandler("not playing")} className="btn btn-secondary">not playing</button>
+            }
+            {status==="undecided"?
+                <button onClick={(e)=>onClickHandler("undecided")}  className="btn btn-success">undecided</button>:
+                <button onClick={(e)=>onClickHandler("undecided")}  className="btn btn-secondary">undecided</button>
+            }
             {
                 errArr.map((err, i) =>(
                     <p key={i}>{err}</p>

@@ -25,7 +25,7 @@ const PlayerStatusTable = (props) => {
                 <thead className="table-info">
                     <tr>
                         <th scope="col">Team Name</th>
-                        <th scope="col">Action</th>
+                        <th colSpan={2}>Action</th>
                     </tr>
                 </thead>
                 {   players&& 

@@ -3,10 +3,11 @@ import axios from 'axios';
 import PreferredPositionButton from './PreferredPositionButton';
 
 
-const PlayerStatusTable = () => {
+const PlayerStatusTable = (props) => {
 
     const [refresh, setRefresh] = useState(false)
     const [players, setPlayers] = useState(null)
+    const {index} = props
 
     useEffect(()=>{
         axios.get(`http://localhost:8000/showPlayers`)
@@ -34,7 +35,7 @@ const PlayerStatusTable = () => {
                         <tr key={i} className="table-success">
                             <td>{player.player_name}</td>
                             <td>
-                                <PreferredPositionButton id={player._id} reload={reload}/>
+                                <PreferredPositionButton id={player._id} reload={reload} index={index} player={player}/>
                             </td>
                         </tr>
                     </tbody>

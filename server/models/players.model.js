@@ -9,7 +9,13 @@ const PlayerSchema = new mongoose.Schema({
         type: String,
         required: [true, "Preferred Position is required"]
     },
-    status: { 
+    game_1: { 
+        type: String,
+    },
+    game_2: { 
+        type: String,
+    },
+    game_3: { 
         type: String,
     }
 }, { timestamps: true });

@@ -3,14 +3,13 @@ import PlayerList from "./components/PlayerList";
 import AddPlayer from "./components/AddPlayer";
 import PlayerStatus from "./views/PlayerStatus";
 import Main from "./views/Main";
-import PlayerStatusTable from "./components/PlayerStatusTable";
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
       <div>
-        <h1><Link to={'/player/list'} >Manage Player</Link> | <Link to={'/status/game/1'} > Manage Player Status</Link></h1>
+        <h1><Link to={'/player/list'} >Manage Player</Link> | <Link to={'/status/game/:id'} > Manage Player Status</Link></h1>
       </div>
         <Switch>
           <Main>
@@ -20,14 +19,10 @@ const App = () => {
             <Route exact path="/player/list">
               <PlayerList />
             </Route>
-          </Main>
-        </Switch>
-        <Switch>
-          <PlayerStatus>
             <Route exact path="/status/game/:id">
-              <PlayerStatusTable/>
+              <PlayerStatus/>
             </Route>
-          </PlayerStatus>
+          </Main>
         </Switch>
       </BrowserRouter>
     </div>

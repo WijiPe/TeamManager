@@ -1,26 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 const PreferredPositionButton = (props) => {
 
-    const [status, setStatus] = useState("");
+    const {index, player} = props 
     const {id, reload} = props
     const [errArr, setErrorArr] = useState([]);
-
-    useEffect(()=>{
-        axios.get(`http://localhost:8000/showOnePlayer/${id}`)
-        .then(res=>setStatus(res.data.status))
-        .catch(err=>console.log(err.response))
-    },[id])
+    const game = player[`game_${index}`]
 
 
     const onClickHandler = (statusText) =>{
-        setStatus(statusText)
         axios.put(`http://localhost:8000/update/${id}`, {
-            status: statusText
+            [`game_${index}`]:statusText
         })
             .then(res=>{
-                setStatus(statusText)
                 reload()
             })
             .catch(err=>{
@@ -35,15 +28,15 @@ const PreferredPositionButton = (props) => {
 
     return (
         <div>
-            {status==="playing"?
+            {game==="playing"?
                 <button onClick={(e)=>onClickHandler("playing")} className="btn btn-warning">playing</button>:
                 <button onClick={(e)=>onClickHandler("playing")} className="btn btn-secondary">playing</button>
             }
-            {status==="not playing"?
+            {game==="not playing"?
                 <button onClick={(e)=>onClickHandler("not playing")} className="btn btn-danger">not playing</button>:
                 <button onClick={(e)=>onClickHandler("not playing")} className="btn btn-secondary">not playing</button>
             }
-            {status==="undecided"?
+            {game==="undecided"?
                 <button onClick={(e)=>onClickHandler("undecided")}  className="btn btn-success">undecided</button>:
                 <button onClick={(e)=>onClickHandler("undecided")}  className="btn btn-secondary">undecided</button>
             }
